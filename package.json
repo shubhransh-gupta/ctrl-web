@@ -1,6 +1,6 @@
 {
   "name": "ctrl-web",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Your browser, but smarter — a local-first Chrome extension utility layer",
   "type": "module",
   "scripts": {

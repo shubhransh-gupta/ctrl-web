@@ -1,5 +1,6 @@
 import { FEATURES, CONTEXT_MENU_FEATURES, EXTENSION_NAME } from '@/shared/constants';
 import type { FeatureId } from '@/shared/types';
+import { executeFeatureOnTab, openPaletteOnTab } from './tabExecutor';
 
 const MENU_PREFIX = 'ctrlweb-';
 
@@ -50,7 +51,11 @@ export function handleContextMenuClick(
   if (info.linkUrl) options.url = info.linkUrl;
   if (info.selectionText) options.selection = info.selectionText;
 
-  executeOnTab(tab.id, featureId, options);
+  executeFeatureOnTab(tab.id, featureId, options).then((result) => {
+    if (!result.success && result.error) {
+      console.error('[CTRL+WEB]', result.error);
+    }
+  });
 }
 
 export async function executeOnTab(
@@ -58,20 +63,9 @@ export async function executeOnTab(
   featureId: FeatureId,
   options?: Record<string, unknown>
 ): Promise<void> {
-  try {
-    await chrome.tabs.sendMessage(tabId, {
-      type: 'EXECUTE_FEATURE',
-      payload: { featureId, options },
-    });
-  } catch (err) {
-    console.error('[CTRL+WEB] Content script not ready. Try refreshing the page.', err);
-  }
+  await executeFeatureOnTab(tabId, featureId, options);
 }
 
 export async function openCommandPaletteOnTab(tabId: number): Promise<void> {
-  try {
-    await chrome.tabs.sendMessage(tabId, { type: 'OPEN_COMMAND_PALETTE' });
-  } catch (err) {
-    console.error('[CTRL+WEB] Content script not ready. Try refreshing the page.', err);
-  }
+  await openPaletteOnTab(tabId);
 }

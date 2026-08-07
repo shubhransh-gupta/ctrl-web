@@ -248,4 +248,9 @@ export function showScreenshotPanel(): void {
   });
 
   document.body.appendChild(panel);
+
+  // Ensure panel is visible even on complex pages
+  requestAnimationFrame(() => {
+    panel.scrollIntoView({ block: 'center' });
+  });
 }

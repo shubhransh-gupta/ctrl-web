@@ -97,8 +97,6 @@ export async function executeFeature(featureId: FeatureId, options?: Record<stri
       default:
         showToast('Unknown feature', 'error');
     }
-
-    chrome.runtime.sendMessage({ type: 'TRACK_ACTION', payload: { featureId } });
   } catch (err) {
     showToast(err instanceof Error ? err.message : 'Feature failed', 'error');
   }
@@ -113,6 +111,8 @@ export function openCommandPalette(): void {
 }
 
 export function handleMessage(message: { type: string; payload?: unknown }): void {
+  if (message.type === 'CTRLWEB_PING') return;
+
   switch (message.type) {
     case 'EXECUTE_FEATURE': {
       const { featureId, options } = message.payload as { featureId: FeatureId; options?: Record<string, unknown> };
@@ -135,9 +135,17 @@ export function handleMessage(message: { type: string; payload?: unknown }): voi
 }
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  if (message.type === 'CTRLWEB_PING') {
+    sendResponse({ ready: true });
+    return true;
+  }
   handleMessage(message);
   sendResponse({ success: true });
   return true;
 });
+
+export function onExecute(): void {
+  console.debug('[CTRL+WEB] Content script ready');
+}
 
 console.debug('[CTRL+WEB] Content script loaded');

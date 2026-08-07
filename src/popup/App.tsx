@@ -20,27 +20,30 @@ interface TabInfo {
   title: string;
 }
 
-async function executeFeature(featureId: FeatureId): Promise<void> {
+async function runFeature(featureId: FeatureId): Promise<{ success: boolean; error?: string }> {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  if (!tab?.id) return;
-
-  try {
-    await chrome.tabs.sendMessage(tab.id, {
-      type: 'EXECUTE_FEATURE',
-      payload: { featureId },
-    });
-  } catch {
-    console.error('[CTRL+WEB] Content script not ready. Refresh the page.');
+  if (!tab?.id) {
+    return { success: false, error: 'No active tab found' };
   }
 
-  chrome.runtime.sendMessage({ type: 'TRACK_ACTION', payload: { featureId } });
-  window.close();
+  if (tab.url?.startsWith('chrome://') || tab.url?.startsWith('edge://') || tab.url?.startsWith('brave://')) {
+    return { success: false, error: 'Open a normal website tab first (not the extensions page).' };
+  }
+
+  const response = await chrome.runtime.sendMessage({
+    type: 'EXECUTE_ON_TAB',
+    payload: { tabId: tab.id, featureId },
+  });
+
+  return response ?? { success: false, error: 'No response from extension' };
 }
 
 export default function App() {
   const [tabInfo, setTabInfo] = useState<TabInfo | null>(null);
   const [settings, setSettings] = useState<ExtensionSettings | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [running, setRunning] = useState<FeatureId | null>(null);
 
   useEffect(() => {
     async function init() {
@@ -62,7 +65,15 @@ export default function App() {
   }, []);
 
   const handleAction = useCallback(async (id: FeatureId) => {
-    await executeFeature(id);
+    setError(null);
+    setRunning(id);
+    const result = await runFeature(id);
+    setRunning(null);
+    if (result.success) {
+      window.close();
+    } else {
+      setError(result.error ?? 'Something went wrong. Refresh the page and try again.');
+    }
   }, []);
 
   const openSettings = () => {
@@ -70,14 +81,20 @@ export default function App() {
   };
 
   const openPalette = async () => {
+    setError(null);
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    if (tab?.id) {
-      try {
-        await chrome.tabs.sendMessage(tab.id, { type: 'OPEN_COMMAND_PALETTE' });
-      } catch {
-        console.error('[CTRL+WEB] Content script not ready. Refresh the page.');
-      }
+    if (!tab?.id) {
+      setError('No active tab found');
+      return;
+    }
+    const response = await chrome.runtime.sendMessage({
+      type: 'OPEN_PALETTE_ON_TAB',
+      payload: { tabId: tab.id },
+    });
+    if (response?.success) {
       window.close();
+    } else {
+      setError(response?.error ?? 'Could not open command palette. Refresh the page.');
     }
   };
 
@@ -106,6 +123,12 @@ export default function App() {
         </div>
       )}
 
+      {error && (
+        <div className="popup__error" role="alert">
+          {error}
+        </div>
+      )}
+
       {recentActions.length > 0 && (
         <section className="popup__section">
           <h2 className="popup__section-title">Recent</h2>
@@ -113,7 +136,12 @@ export default function App() {
             {recentActions.map((id) => {
               const f = FEATURES[id];
               return (
-                <button key={id} className="popup__action popup__action--recent" onClick={() => handleAction(id)}>
+                <button
+                key={id}
+                className="popup__action popup__action--recent"
+                onClick={() => handleAction(id)}
+                disabled={running !== null}
+              >
                   <span className="popup__action-icon">{f.icon}</span>
                   <span className="popup__action-label">{f.label}</span>
                 </button>
@@ -129,7 +157,12 @@ export default function App() {
           {QUICK_ACTIONS.map((id) => {
             const f = FEATURES[id];
             return (
-              <button key={id} className="popup__action" onClick={() => handleAction(id)}>
+              <button
+                key={id}
+                className="popup__action"
+                onClick={() => handleAction(id)}
+                disabled={running !== null}
+              >
                 <span className="popup__action-icon">{f.icon}</span>
                 <span className="popup__action-label">{f.label}</span>
               </button>

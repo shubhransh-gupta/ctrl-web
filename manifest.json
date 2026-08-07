@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "CTRL+WEB",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Your browser, but smarter. A local-first utility layer for everyday browsing.",
   "icons": {
     "16": "public/icons/icon16.png",
@@ -50,7 +50,8 @@
     "storage",
     "clipboardWrite",
     "scripting",
-    "offscreen"
+    "offscreen",
+    "tabs"
   ],
   "host_permissions": [
     "<all_urls>",

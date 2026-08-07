@@ -2,6 +2,7 @@ import { getSettings, updateSettings, addRecentAction } from '@/shared/storage/s
 import { saveItem, getAllItems, deleteItem } from '@/shared/storage/library';
 import { callAI, parseExplanationResponse } from '@/shared/ai/aiClient';
 import { readingTime, wordCount } from '@/shared/utils';
+import { executeFeatureOnTab, openPaletteOnTab } from './tabExecutor';
 import type { FeatureId, SummarizeInput } from '@/shared/types';
 
 export async function routeMessage(
@@ -39,13 +40,35 @@ export async function routeMessage(
       return { success: true };
     }
 
+    case 'EXECUTE_ON_TAB': {
+      const { tabId, featureId, options } = message.payload as {
+        tabId?: number;
+        featureId: FeatureId;
+        options?: Record<string, unknown>;
+      };
+      const id = tabId ?? sender.tab?.id ?? (await getActiveTabId());
+      if (!id) return { success: false, error: 'No active tab' };
+      const result = await executeFeatureOnTab(id, featureId, options);
+      if (result.success) {
+        await addRecentAction(featureId);
+      }
+      return result;
+    }
+
+    case 'OPEN_PALETTE_ON_TAB': {
+      const { tabId } = (message.payload ?? {}) as { tabId?: number };
+      const id = tabId ?? sender.tab?.id ?? (await getActiveTabId());
+      if (!id) return { success: false, error: 'No active tab' };
+      return openPaletteOnTab(id);
+    }
+
     case 'CAPTURE_VISIBLE_TAB': {
       const { format, quality } = (message.payload ?? {}) as { format: 'png' | 'jpeg'; quality: number };
-      const tabId = sender.tab?.id;
+      const tabId = sender.tab?.id ?? (await getActiveTabId());
       if (!tabId) return { success: false, error: 'No active tab' };
 
       try {
-        const tab = sender.tab ?? await chrome.tabs.get(tabId);
+        const tab = await chrome.tabs.get(tabId);
         const dataUrl = await chrome.tabs.captureVisibleTab(tab.windowId, {
           format: format === 'jpeg' ? 'jpeg' : 'png',
           quality: quality ?? 92,
