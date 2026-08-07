@@ -235,4 +235,4 @@ Feature modules live in `src/features/`. To add a new utility:
 
 ## License
 
-MIT
+This project is licensed under the [MIT License](LICENSE).
