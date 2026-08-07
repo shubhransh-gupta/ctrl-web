@@ -10,6 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "package": "bash scripts/package-extension.sh",
+    "lint": "tsc --noEmit"
   },
   "keywords": [
     "chrome-extension",
