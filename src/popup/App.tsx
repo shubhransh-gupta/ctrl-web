@@ -30,12 +30,30 @@ async function runFeature(featureId: FeatureId): Promise<{ success: boolean; err
     return { success: false, error: 'Open a normal website tab first (not the extensions page).' };
   }
 
-  const response = await chrome.runtime.sendMessage({
-    type: 'EXECUTE_ON_TAB',
-    payload: { tabId: tab.id, featureId },
-  });
+  try {
+    const response = await chrome.runtime.sendMessage({
+      type: 'EXECUTE_ON_TAB',
+      payload: { tabId: tab.id, featureId },
+    });
 
-  return response ?? { success: false, error: 'No response from extension' };
+    if (chrome.runtime.lastError) {
+      return { success: false, error: chrome.runtime.lastError.message };
+    }
+
+    if (response?.error === 'Unknown message type') {
+      return {
+        success: false,
+        error: 'Extension needs a reload. Open chrome://extensions and click Reload on CTRL+WEB.',
+      };
+    }
+
+    return response ?? { success: false, error: 'No response from extension' };
+  } catch (err) {
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Failed to run action',
+    };
+  }
 }
 
 export default function App() {

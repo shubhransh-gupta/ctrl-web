@@ -55,6 +55,17 @@ export async function routeMessage(
       return result;
     }
 
+    case 'EXECUTE_FEATURE': {
+      const { featureId, options, tabId } = message.payload as {
+        featureId: FeatureId;
+        options?: Record<string, unknown>;
+        tabId?: number;
+      };
+      const id = tabId ?? sender.tab?.id ?? (await getActiveTabId());
+      if (!id) return { success: false, error: 'No active tab' };
+      return executeFeatureOnTab(id, featureId, options);
+    }
+
     case 'OPEN_PALETTE_ON_TAB': {
       const { tabId } = (message.payload ?? {}) as { tabId?: number };
       const id = tabId ?? sender.tab?.id ?? (await getActiveTabId());

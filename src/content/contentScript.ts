@@ -110,6 +110,15 @@ export function openCommandPalette(): void {
   showCommandPalette((id) => executeFeature(id));
 }
 
+const CONTENT_SCRIPT_MESSAGE_TYPES = new Set([
+  'CTRLWEB_PING',
+  'EXECUTE_FEATURE',
+  'OPEN_COMMAND_PALETTE',
+  'HIDE_COMMAND_PALETTE',
+  'STOP_INSPECT',
+  'EXIT_CLEAN_MODE',
+]);
+
 export function handleMessage(message: { type: string; payload?: unknown }): void {
   if (message.type === 'CTRLWEB_PING') return;
 
@@ -135,10 +144,16 @@ export function handleMessage(message: { type: string; payload?: unknown }): voi
 }
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  // Let the service worker handle background-only messages (GET_SETTINGS, EXECUTE_ON_TAB, etc.)
+  if (!CONTENT_SCRIPT_MESSAGE_TYPES.has(message.type)) {
+    return false;
+  }
+
   if (message.type === 'CTRLWEB_PING') {
     sendResponse({ ready: true });
     return true;
   }
+
   handleMessage(message);
   sendResponse({ success: true });
   return true;
