@@ -1,0 +1,77 @@
+import { FEATURES, CONTEXT_MENU_FEATURES, EXTENSION_NAME } from '@/shared/constants';
+import type { FeatureId } from '@/shared/types';
+
+const MENU_PREFIX = 'ctrlweb-';
+
+export function setupContextMenus(): void {
+  chrome.contextMenus.removeAll(() => {
+    chrome.contextMenus.create({
+      id: `${MENU_PREFIX}root`,
+      title: EXTENSION_NAME,
+      contexts: ['all'],
+    });
+
+    const allFeatures = Object.values(FEATURES);
+    for (const feature of allFeatures) {
+      chrome.contextMenus.create({
+        id: `${MENU_PREFIX}${feature.id}`,
+        parentId: `${MENU_PREFIX}root`,
+        title: `${feature.icon} ${feature.label}`,
+        contexts: getContextsForFeature(feature.id),
+      });
+    }
+  });
+}
+
+function getContextsForFeature(id: FeatureId): chrome.contextMenus.ContextType[] {
+  const contexts = new Set<chrome.contextMenus.ContextType>();
+
+  if (CONTEXT_MENU_FEATURES.selection.includes(id)) contexts.add('selection');
+  if (CONTEXT_MENU_FEATURES.link.includes(id)) contexts.add('link');
+  if (CONTEXT_MENU_FEATURES.page.includes(id)) contexts.add('page');
+  if (CONTEXT_MENU_FEATURES.image.includes(id)) contexts.add('image');
+
+  if (contexts.size === 0) contexts.add('all');
+  return Array.from(contexts);
+}
+
+export function handleContextMenuClick(
+  info: chrome.contextMenus.OnClickData,
+  tab?: chrome.tabs.Tab
+): void {
+  if (!tab?.id) return;
+
+  const menuItemId = String(info.menuItemId);
+  if (!menuItemId.startsWith(MENU_PREFIX) || menuItemId === `${MENU_PREFIX}root`) return;
+
+  const featureId = menuItemId.replace(MENU_PREFIX, '') as FeatureId;
+
+  const options: Record<string, unknown> = {};
+  if (info.linkUrl) options.url = info.linkUrl;
+  if (info.selectionText) options.selection = info.selectionText;
+
+  executeOnTab(tab.id, featureId, options);
+}
+
+export async function executeOnTab(
+  tabId: number,
+  featureId: FeatureId,
+  options?: Record<string, unknown>
+): Promise<void> {
+  try {
+    await chrome.tabs.sendMessage(tabId, {
+      type: 'EXECUTE_FEATURE',
+      payload: { featureId, options },
+    });
+  } catch (err) {
+    console.error('[CTRL+WEB] Content script not ready. Try refreshing the page.', err);
+  }
+}
+
+export async function openCommandPaletteOnTab(tabId: number): Promise<void> {
+  try {
+    await chrome.tabs.sendMessage(tabId, { type: 'OPEN_COMMAND_PALETTE' });
+  } catch (err) {
+    console.error('[CTRL+WEB] Content script not ready. Try refreshing the page.', err);
+  }
+}
