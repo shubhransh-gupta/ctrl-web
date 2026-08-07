@@ -5,11 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CTRL+WEB — Your browser, but smarter</title>
   <meta name="description" content="CTRL+WEB is a free, local-first Chrome extension. Clean pages, copy text, check privacy, screenshot, and more — right from the right-click menu.">
-  <meta name="theme-color" content="#0d0d10">
+  <meta name="theme-color" content="#ffffff">
   <link rel="icon" type="image/png" href="icons/icon32.png">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="page-bg" aria-hidden="true">
+    <div class="page-bg__orb page-bg__orb--1"></div>
+    <div class="page-bg__orb page-bg__orb--2"></div>
+    <div class="page-bg__orb page-bg__orb--3"></div>
+    <div class="page-bg__orb page-bg__orb--4"></div>
+    <div class="page-bg__orb page-bg__orb--5"></div>
+    <div class="page-bg__orb page-bg__orb--6"></div>
+    <div class="page-bg__orb page-bg__orb--7"></div>
+  </div>
+
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header">
@@ -27,7 +37,12 @@
 
   <main id="main">
     <section class="hero">
-      <div class="hero__badge">Free · Open source · Local-first</div>
+      <div class="hero__badge">
+        <span class="hero__badge-dots" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </span>
+        Free · Open source · Local-first
+      </div>
       <h1>CTRL+WEB</h1>
       <p class="hero__tagline">Your browser, but smarter.</p>
       <p class="hero__desc">A browser extension that removes annoying, repetitive steps from everyday browsing. Right-click anything — CTRL+WEB handles the rest.</p>

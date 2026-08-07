@@ -9,7 +9,21 @@ A local-first Chrome extension utility layer that removes repetitive steps from 
 
 **Website:** https://shubhransh-gupta.github.io/ctrl-web/
 
-![CTRL+WEB Popup](docs/screenshots/popup-placeholder.png)
+## Website preview
+
+The landing page uses a clean white layout with a seven-color gradient palette — inspired by modern SaaS product pages.
+
+| Hero | Features | Install guide |
+|------|----------|---------------|
+| ![CTRL+WEB website hero](docs/screenshots/website-hero.png) | ![CTRL+WEB website features](docs/screenshots/website-features.png) | ![CTRL+WEB website install](docs/screenshots/website-install.png) |
+
+**Live site:** [shubhransh-gupta.github.io/ctrl-web](https://shubhransh-gupta.github.io/ctrl-web/)
+
+To regenerate screenshots after editing `website/`:
+
+```bash
+npm run screenshots
+```
 
 ## Features
 
@@ -192,7 +206,13 @@ The project website lives in `website/` and is deployed to GitHub Pages:
 
 **https://shubhransh-gupta.github.io/ctrl-web/**
 
+![Website hero section](docs/screenshots/website-hero.png)
+
 It includes feature overview, step-by-step install instructions, and FAQ for users who don't want to read the README.
+
+![Website features section](docs/screenshots/website-features.png)
+
+![Website install section](docs/screenshots/website-install.png)
 
 ## Contributing
 
