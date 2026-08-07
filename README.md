@@ -7,6 +7,8 @@ CTRL+WEB handles the annoying part.
 
 A local-first Chrome extension utility layer that removes repetitive steps from everyday browsing — without AI, accounts, or servers.
 
+**Website:** https://shubhransh-gupta.github.io/ctrl-web/
+
 ![CTRL+WEB Popup](docs/screenshots/popup-placeholder.png)
 
 ## Features
@@ -186,7 +188,11 @@ Configure:
 
 ## Landing page
 
-A static landing page is in `website/` — deployable to GitHub Pages.
+The project website lives in `website/` and is deployed to GitHub Pages:
+
+**https://shubhransh-gupta.github.io/ctrl-web/**
+
+It includes feature overview, step-by-step install instructions, and FAQ for users who don't want to read the README.
 
 ## Contributing
 

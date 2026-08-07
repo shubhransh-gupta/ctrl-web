@@ -4,60 +4,232 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CTRL+WEB — Your browser, but smarter</title>
-  <meta name="description" content="A local-first Chrome extension that removes annoying steps from everyday browsing.">
+  <meta name="description" content="CTRL+WEB is a free, local-first Chrome extension. Clean pages, copy text, check privacy, screenshot, and more — right from the right-click menu.">
+  <meta name="theme-color" content="#0d0d10">
+  <link rel="icon" type="image/png" href="icons/icon32.png">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="hero">
-    <nav class="nav">
-      <span class="nav__logo">CTRL+WEB</span>
-      <a href="https://github.com" class="nav__link">GitHub</a>
-    </nav>
-    <div class="hero__content">
-      <h1>CTRL+WEB</h1>
-      <p class="hero__tagline">Your browser, but smarter.</p>
-      <blockquote class="hero__quote">Stop opening five tabs to do one tiny thing.</blockquote>
-      <div class="hero__cta">
-      <a href="https://github.com/shubhransh-gupta/ctrl-web/releases/latest" class="btn btn--primary">Add to Chrome</a>
-      <a href="https://github.com/shubhransh-gupta/ctrl-web" class="btn btn--secondary">View on GitHub</a>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Main">
+      <a href="#" class="nav__logo">CTRL+WEB</a>
+      <div class="nav__links">
+        <a href="#about" class="nav__link">About</a>
+        <a href="#features" class="nav__link">Features</a>
+        <a href="#install" class="nav__link nav__link--accent">Install</a>
+        <a href="#privacy" class="nav__link">Privacy</a>
+        <a href="https://github.com/shubhransh-gupta/ctrl-web" class="nav__link" target="_blank" rel="noopener">GitHub</a>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <section class="features">
-    <h2>Right-click anything.<br>CTRL+WEB handles the annoying part.</h2>
-    <div class="features__grid">
-      <div class="feature"><span>🧠</span><h3>Understand anything</h3><p>Explain HTTP errors, dev terms, and technical concepts locally.</p></div>
-      <div class="feature"><span>🧹</span><h3>Clean any page</h3><p>Remove cookie banners, popups, and clutter — restore anytime.</p></div>
-      <div class="feature"><span>📋</span><h3>Copy without the garbage</h3><p>Clean selected text. No ads, no share buttons, no junk.</p></div>
-      <div class="feature"><span>🔐</span><h3>Catch sensitive data</h3><p>Scan for emails, tokens, keys — redact before you share.</p></div>
-      <div class="feature"><span>📸</span><h3>Screenshot smarter</h3><p>Capture visible, selected, or full page. Download or copy.</p></div>
-      <div class="feature"><span>🔗</span><h3>Clean ugly URLs</h3><p>Strip tracking params from utm, fbclid, gclid, and more.</p></div>
-      <div class="feature"><span>💾</span><h3>Save locally</h3><p>Build a personal library. No account. No server.</p></div>
-      <div class="feature"><span>🧪</span><h3>Inspect anything</h3><p>Copy selectors, CSS, HTML from any element.</p></div>
-    </div>
-  </section>
+  <main id="main">
+    <section class="hero">
+      <div class="hero__badge">Free · Open source · Local-first</div>
+      <h1>CTRL+WEB</h1>
+      <p class="hero__tagline">Your browser, but smarter.</p>
+      <p class="hero__desc">A browser extension that removes annoying, repetitive steps from everyday browsing. Right-click anything — CTRL+WEB handles the rest.</p>
+      <blockquote class="hero__quote">Stop opening five tabs to do one tiny thing.</blockquote>
+      <div class="hero__cta">
+        <a href="https://github.com/shubhransh-gupta/ctrl-web/releases/latest" class="btn btn--primary">Download extension</a>
+        <a href="#install" class="btn btn--secondary">Installation guide</a>
+      </div>
+      <p class="hero__note">Works in Chrome, Brave, Edge · No account · No npm required</p>
+    </section>
 
-  <section class="privacy">
-    <div class="privacy__content">
-      <h2>No account. No tracking. No upload required.</h2>
-      <p>CTRL+WEB is local-first. Most functionality runs entirely inside your browser. Your browsing data stays on your device.</p>
-    </div>
-  </section>
+    <section id="about" class="section about">
+      <div class="section__inner">
+        <div class="about__grid">
+          <div>
+            <h2 class="section__title">What is CTRL+WEB?</h2>
+            <p class="section__lead">This website tells you about the product. The <strong>extension</strong> is what you install in your browser to use it.</p>
+            <ul class="about__list">
+              <li><strong>Website</strong> — you're here. Learn what it does and how to install.</li>
+              <li><strong>Extension</strong> — a small add-on in Chrome/Brave/Edge that adds right-click tools, a toolbar popup, and keyboard shortcuts.</li>
+            </ul>
+            <p class="about__note">CTRL+WEB is not an AI chatbot in your browser. It's a utility layer: copy clean text, strip tracking from URLs, hide cookie banners, scan for secrets, take screenshots, and more — mostly processed on your device.</p>
+          </div>
+          <div class="about__card">
+            <div class="about__card-label">Primary entry points</div>
+            <ul>
+              <li>Right-click → <strong>CTRL+WEB</strong></li>
+              <li>Toolbar icon → quick actions</li>
+              <li><kbd>⌘</kbd> <kbd>Shift</kbd> <kbd>K</kbd> → command palette</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <section class="how">
-    <h2>How it works</h2>
-    <div class="how__steps">
-      <div class="step"><span>1</span><p>Select something on a webpage</p></div>
-      <div class="step"><span>2</span><p>Right-click → CTRL+WEB</p></div>
-      <div class="step"><span>3</span><p>One action. Problem solved.</p></div>
-    </div>
-    <p class="how__shortcut">Or press <kbd>⌘</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> for the command palette.</p>
-  </section>
+    <section id="features" class="section features">
+      <div class="section__inner">
+        <h2 class="section__title section__title--center">Everything you need, one right-click away</h2>
+        <p class="section__subtitle">Nine tools. No clutter. No account.</p>
+        <div class="features__grid">
+          <article class="feature"><span class="feature__icon">🧠</span><h3>Explain this</h3><p>Understand HTTP errors, dev terms, and technical jargon — locally, with optional AI.</p></article>
+          <article class="feature"><span class="feature__icon">🧹</span><h3>Clean this page</h3><p>Remove cookie banners, popups, and sticky clutter. Restore anytime.</p></article>
+          <article class="feature"><span class="feature__icon">📋</span><h3>Copy clean</h3><p>Copy selected text without ads, share buttons, or junk formatting.</p></article>
+          <article class="feature"><span class="feature__icon">🔐</span><h3>Check privacy</h3><p>Scan for emails, API keys, tokens — redact before you share.</p></article>
+          <article class="feature"><span class="feature__icon">📸</span><h3>Screenshot</h3><p>Visible, selection, or full-page capture with blur and annotations.</p></article>
+          <article class="feature"><span class="feature__icon">🔗</span><h3>Clean link</h3><p>Strip utm, fbclid, gclid, and other tracking from URLs.</p></article>
+          <article class="feature"><span class="feature__icon">📝</span><h3>Summarize</h3><p>Quick local summary of page content. Optional AI if you configure it.</p></article>
+          <article class="feature"><span class="feature__icon">💾</span><h3>Save locally</h3><p>Bookmark snippets to a personal library on your device.</p></article>
+          <article class="feature"><span class="feature__icon">🧪</span><h3>Inspect</h3><p>Copy CSS, selectors, and HTML from any element.</p></article>
+        </div>
+      </div>
+    </section>
 
-  <footer class="footer">
-    <p>CTRL+WEB — Open source browser utility layer</p>
-    <p>Works in Chrome, Brave, Edge, and other Chromium browsers.</p>
+    <section id="install" class="section install">
+      <div class="section__inner">
+        <h2 class="section__title section__title--center">Install the extension</h2>
+        <p class="section__subtitle">No Node.js. No npm. No terminal. Just download and load.</p>
+
+        <div class="install__highlight">
+          <strong>You need the pre-built zip</strong>, not the source code on GitHub. The zip contains compiled files Chrome can run.
+        </div>
+
+        <div class="install__steps">
+          <h3>Step-by-step (Chrome, Brave, or Edge)</h3>
+          <ol class="steps">
+            <li class="step">
+              <span class="step__num">1</span>
+              <div>
+                <strong>Download the extension</strong>
+                <p>Get <code>ctrl-web-extension.zip</code> from the latest GitHub Release.</p>
+                <a href="https://github.com/shubhransh-gupta/ctrl-web/releases/latest" class="btn btn--small btn--primary">Download latest release</a>
+              </div>
+            </li>
+            <li class="step">
+              <span class="step__num">2</span>
+              <div>
+                <strong>Unzip the file</strong>
+                <p>Extract to a folder you'll keep — e.g. <code>ctrl-web-extension/</code>. Don't delete it after installing; Chrome loads the extension from this folder.</p>
+              </div>
+            </li>
+            <li class="step">
+              <span class="step__num">3</span>
+              <div>
+                <strong>Open extensions page</strong>
+                <ul class="browser-links">
+                  <li><a href="https://chrome.google.com/webstore/category/extensions" target="_blank" rel="noopener">Chrome</a> → <code>chrome://extensions</code></li>
+                  <li>Brave → <code>brave://extensions</code></li>
+                  <li>Edge → <code>edge://extensions</code></li>
+                </ul>
+              </div>
+            </li>
+            <li class="step">
+              <span class="step__num">4</span>
+              <div>
+                <strong>Enable Developer mode</strong>
+                <p>Toggle <strong>Developer mode</strong> in the top-right corner of the extensions page.</p>
+              </div>
+            </li>
+            <li class="step">
+              <span class="step__num">5</span>
+              <div>
+                <strong>Load unpacked</strong>
+                <p>Click <strong>Load unpacked</strong> and select the unzipped folder (the one containing <code>manifest.json</code>).</p>
+              </div>
+            </li>
+            <li class="step">
+              <span class="step__num">6</span>
+              <div>
+                <strong>Start using CTRL+WEB</strong>
+                <p>Pin the extension icon, right-click any page, or press <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd>.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="install__grid">
+          <div class="install__card install__card--ok">
+            <h4>✓ This works</h4>
+            <ul>
+              <li>Download zip from Releases</li>
+              <li>Unzip and load that folder</li>
+              <li>Folder contains <code>manifest.json</code> + <code>assets/</code></li>
+            </ul>
+          </div>
+          <div class="install__card install__card--no">
+            <h4>✗ This does not work</h4>
+            <ul>
+              <li>Cloning the GitHub repo and loading the root</li>
+              <li>Loading the <code>src/</code> folder</li>
+              <li>Expecting "Download ZIP" of source to work as an extension</li>
+            </ul>
+          </div>
+        </div>
+
+        <details class="faq">
+          <summary>I'm a developer — build from source</summary>
+          <div class="faq__body">
+            <pre><code>git clone https://github.com/shubhransh-gupta/ctrl-web.git
+cd ctrl-web
+npm install
+npm run build</code></pre>
+            <p>Then load the <code>dist/</code> folder in <code>chrome://extensions</code> → Load unpacked.</p>
+          </div>
+        </details>
+
+        <details class="faq">
+          <summary>Why isn't it on the Chrome Web Store?</summary>
+          <div class="faq__body">
+            <p>CTRL+WEB is distributed as open-source releases for now. Install via the zip above — it's the same extension, just not listed in the store yet.</p>
+          </div>
+        </details>
+
+        <details class="faq">
+          <summary>Do I need npm or Node.js?</summary>
+          <div class="faq__body">
+            <p><strong>No.</strong> End users only need the pre-built zip from Releases. npm is only for developers who want to modify the code.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="privacy" class="section privacy">
+      <div class="section__inner privacy__inner">
+        <h2 class="section__title section__title--center">Your data stays yours</h2>
+        <p class="privacy__tagline">No account. No tracking. No upload required.</p>
+        <div class="privacy__grid">
+          <div class="privacy__item">Local processing by default</div>
+          <div class="privacy__item">No browsing history uploaded</div>
+          <div class="privacy__item">No analytics or telemetry</div>
+          <div class="privacy__item">AI disabled by default</div>
+          <div class="privacy__item">No mandatory API keys</div>
+          <div class="privacy__item">Library stored on your device</div>
+        </div>
+        <p class="privacy__footer">CTRL+WEB processes features locally whenever possible. Optional AI sends content only to <em>your</em> configured provider, with your explicit consent.</p>
+      </div>
+    </section>
+
+    <section class="section cta">
+      <div class="section__inner cta__inner">
+        <h2>Ready to browse smarter?</h2>
+        <p>Download the extension and try it on any webpage.</p>
+        <div class="hero__cta">
+          <a href="https://github.com/shubhransh-gupta/ctrl-web/releases/latest" class="btn btn--primary">Download extension</a>
+          <a href="https://github.com/shubhransh-gupta/ctrl-web" class="btn btn--secondary" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div>
+        <strong>CTRL+WEB</strong>
+        <p>Open source browser utility layer</p>
+      </div>
+      <div class="site-footer__links">
+        <a href="#install">Install</a>
+        <a href="https://github.com/shubhransh-gupta/ctrl-web/releases">Releases</a>
+        <a href="https://github.com/shubhransh-gupta/ctrl-web">GitHub</a>
+      </div>
+    </div>
+    <p class="site-footer__copy">Works in Chrome, Brave, Edge, and other Chromium browsers.</p>
   </footer>
 </body>
 </html>
