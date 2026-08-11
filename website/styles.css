@@ -525,7 +525,18 @@ body {
 .feature:nth-child(6) { --feature-accent: var(--c-blue); }
 .feature:nth-child(7) { --feature-accent: var(--c-violet); }
 .feature:nth-child(8) { --feature-accent: var(--c-red); }
-.feature:nth-child(9) { --feature-accent: var(--c-cyan); }
+.features__utilities-title {
+  margin-top: 56px;
+}
+
+.features__grid--utilities .feature::before {
+  opacity: 0.6;
+}
+
+.features__grid--utilities .feature:nth-child(n)::before {
+  background: var(--border-strong);
+  height: 2px;
+}
 
 .feature__icon {
   font-size: 32px;

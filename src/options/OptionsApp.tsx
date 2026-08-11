@@ -29,11 +29,38 @@ export default function OptionsApp() {
   }, [settings]);
 
   const clearData = async () => {
-    if (!confirm('Clear all local CTRL+WEB data? This cannot be undone.')) return;
-    const { clearAllData } = await import('@/shared/storage/settings');
-    await clearAllData();
+    if (!confirm('Delete all CTRL+WEB data? This removes indexed pages, browsing context, workspaces, clipboard, deadlines, and settings. This cannot be undone.')) return;
+    await chrome.runtime.sendMessage({ type: 'DELETE_ALL_DATA' });
     setSettings(DEFAULT_SETTINGS);
     setSavedItems([]);
+  };
+
+  const exportData = async () => {
+    const response = await chrome.runtime.sendMessage({ type: 'EXPORT_DATA' });
+    if (!response?.success) return;
+    const blob = new Blob([JSON.stringify(response.data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ctrlweb-export-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const importData = async () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json,.json';
+    input.onchange = async () => {
+      const file = input.files?.[0];
+      if (!file) return;
+      const text = await file.text();
+      const data = JSON.parse(text);
+      await chrome.runtime.sendMessage({ type: 'IMPORT_DATA', payload: { data } });
+      const settingsRes = await chrome.runtime.sendMessage({ type: 'GET_SETTINGS' });
+      if (settingsRes?.success) setSettings(settingsRes.data);
+    };
+    input.click();
   };
 
   const deleteItem = async (id: string) => {
@@ -117,6 +144,51 @@ export default function OptionsApp() {
                 <li>No analytics by default</li>
                 <li>No tracking by default</li>
               </ul>
+            </div>
+            <div className="options__field options__field--checkbox">
+              <label>
+                <input type="checkbox" checked={!settings.paused} onChange={(e) => updateSetting('paused', !e.target.checked)} />
+                CTRL+WEB enabled
+              </label>
+            </div>
+            <div className="options__field options__field--checkbox">
+              <label>
+                <input type="checkbox" checked={settings.indexBrowsing} onChange={(e) => updateSetting('indexBrowsing', e.target.checked)} />
+                Index browsing (FindIT)
+              </label>
+            </div>
+            <div className="options__field options__field--checkbox">
+              <label>
+                <input type="checkbox" checked={settings.trackBrowsingContext} onChange={(e) => updateSetting('trackBrowsingContext', e.target.checked)} />
+                Track browsing context (Backtrack & Context)
+              </label>
+            </div>
+            <div className="options__field options__field--checkbox">
+              <label>
+                <input type="checkbox" checked={settings.storeClipboard} onChange={(e) => updateSetting('storeClipboard', e.target.checked)} />
+                Store clipboard (CopyPaste)
+              </label>
+            </div>
+            <div className="options__field options__field--checkbox">
+              <label>
+                <input type="checkbox" checked={settings.detectDeadlines} onChange={(e) => updateSetting('detectDeadlines', e.target.checked)} />
+                Detect deadlines on pages
+              </label>
+            </div>
+            <div className="options__field">
+              <label htmlFor="excludedDomains">Excluded websites (comma-separated domains)</label>
+              <input
+                id="excludedDomains"
+                type="text"
+                value={settings.excludedDomains.join(', ')}
+                onChange={(e) =>
+                  updateSetting(
+                    'excludedDomains',
+                    e.target.value.split(',').map((d) => d.trim()).filter(Boolean)
+                  )
+                }
+                placeholder="e.g. mybank.com, company.internal"
+              />
             </div>
             <div className="options__field options__field--checkbox">
               <label>
@@ -224,7 +296,9 @@ export default function OptionsApp() {
                 Debug mode
               </label>
             </div>
-            <button className="options__danger-btn" onClick={clearData}>Clear all local data</button>
+            <button className="options__danger-btn" onClick={clearData}>Delete all data</button>
+            <button className="options__secondary-btn" onClick={exportData}>Export CTRL+WEB data</button>
+            <button className="options__secondary-btn" onClick={importData}>Import CTRL+WEB data</button>
             <button className="options__danger-btn" onClick={() => updateSetting('recentActions', [])}>Reset recent actions</button>
           </section>
         )}

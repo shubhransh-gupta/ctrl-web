@@ -185,7 +185,7 @@ export function showScreenshotPanel(): void {
     lastOptions = { mode, format, autoBlurSensitive, annotate };
 
     try {
-      if (mode === 'selection') panel.style.display = 'none';
+      if (mode === 'selection' || mode === 'visible') panel.style.display = 'none';
       captureBtn.disabled = true;
       captureBtn.textContent = 'Capturing...';
 
@@ -199,7 +199,7 @@ export function showScreenshotPanel(): void {
         capturedBlob = await takeScreenshot({ mode, format });
       }
 
-      if (mode === 'selection') panel.style.display = '';
+      if (mode === 'selection' || mode === 'visible') panel.style.display = '';
 
       if (annotate) {
         captureBtn.textContent = 'Annotate...';
@@ -209,7 +209,7 @@ export function showScreenshotPanel(): void {
       (panel.querySelector('#actions') as HTMLElement).style.display = 'flex';
       showToast('✓ Screenshot captured');
     } catch (err) {
-      if (mode === 'selection') panel.style.display = '';
+      if (mode === 'selection' || mode === 'visible') panel.style.display = '';
       if (!(err instanceof Error && err.message === 'Cancelled')) {
         showToast(err instanceof Error ? err.message : 'Capture failed', 'error');
       }

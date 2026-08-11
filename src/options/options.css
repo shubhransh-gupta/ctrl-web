@@ -244,6 +244,22 @@
   font-size: 11px;
 }
 
+.options__secondary-btn {
+  margin-top: 8px;
+  margin-right: 8px;
+  padding: 10px 16px;
+  background: var(--cw-bg-secondary);
+  border: 1px solid var(--cw-border);
+  border-radius: var(--cw-radius-sm);
+  color: var(--cw-text);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.options__secondary-btn:hover {
+  border-color: var(--cw-border-hover);
+}
+
 .options__danger-btn {
   display: block;
   margin-bottom: 8px;

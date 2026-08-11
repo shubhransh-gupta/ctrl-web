@@ -5,9 +5,40 @@
 Right-click anything.  
 CTRL+WEB handles the annoying part.
 
-A local-first Chrome extension utility layer that removes repetitive steps from everyday browsing — without AI, accounts, or servers.
+A local-first Chrome extension — a collection of **browser superpowers** that turn annoying 10-second tasks into one-click actions. No AI required. No accounts. No servers.
 
-**Website:** https://shubhransh-gupta.github.io/ctrl-web/
+**Website:** https://shubhransh-gupta.github.io/ctrl-web/  
+**v2.0 branch:** `v2.0` — Browser Superpower Suite
+
+## Browser superpowers (v2.0)
+
+Small tools that remove annoying everyday internet tasks:
+
+| Feature | Description |
+|---------|-------------|
+| 🔎 **FindIT** | Search pages you've visited — local keyword index with snippets, filters, pinning |
+| 🧠 **Backtrack** | Reconstruct what you were doing in the last 10 min – 1 day |
+| 🧩 **Context** | Understand why you opened a tab from recent browsing flow |
+| 🗂️ **TabZero** | Group open tabs, save workspaces, close/resume batches |
+| 📋 **CopyPaste** | Clipboard history with source attribution (opt-in) |
+| 🔗 **URLClean** | Strip tracking params from links — conservative, configurable |
+| 🧹 **WebTrash** | Reversible clean reading mode — hide clutter, restore anytime |
+| 📅 **Deadline** | Detect application/expiry dates on pages with local reminders |
+
+Press **⌘/Ctrl + Shift + K** to open the command palette and search all features instantly.
+
+## Utility tools (still included)
+
+| Feature | Description |
+|---------|-------------|
+| 🧠 **Explain this** | Local knowledge base for HTTP errors & dev terms + optional AI |
+| 🔐 **Check privacy** | Detect potentially sensitive data (emails, tokens, keys) locally |
+| 📸 **Screenshot** | Visible, selection, or full-page capture with annotation editor |
+| 📝 **Summarize** | Local structural summarization + optional AI (with consent) |
+| 💾 **Save locally** | Personal library stored in IndexedDB — no account needed |
+| 🧪 **Inspect** | Developer overlay with CSS, selector, XPath copy actions |
+
+Legacy aliases still work: `cleanPage` → WebTrash, `cleanLink` → URLClean, `copyClean` → CopyPaste.
 
 ## Website preview
 
@@ -27,30 +58,20 @@ npm run screenshots
 
 ## Features
 
-| Feature | Description |
-|---------|-------------|
-| 🧠 **Explain this** | Local knowledge base for HTTP errors & dev terms + optional AI |
-| 🧹 **Clean this page** | Remove cookie banners, popups, sticky headers — fully reversible |
-| 📋 **Copy clean** | Copy selected text without ads, clutter, or tracking links |
-| 🔐 **Check privacy** | Detect potentially sensitive data (emails, tokens, keys) locally |
-| 📸 **Screenshot** | Visible, selection, or full-page capture with annotation editor |
-| 🔗 **Clean link** | Strip utm, fbclid, gclid, and other tracking parameters |
-| 📝 **Summarize** | Local structural summarization + optional AI (with consent) |
-| 💾 **Save locally** | Personal library stored in IndexedDB — no account needed |
-| 🧪 **Inspect** | Developer overlay with CSS, selector, XPath copy actions |
+_See Browser superpowers and Utility tools above._
 
 ## Privacy
 
-> **CTRL+WEB is local-first. Most functionality runs entirely inside your browser.**
+> **Local-first. Your browsing data stays on your device.**
 
 - No account required
-- No browsing history uploaded
-- No analytics by default
-- No tracking by default
-- No mandatory API keys
+- No browsing history uploaded to any server
+- No analytics or telemetry
+- FindIT/Backtrack store lightweight metadata locally in IndexedDB
+- Clipboard storage is **off by default**
 - AI features disabled by default
-
-Your browsing data stays on your device.
+- Per-feature toggles + excluded domains in Settings → Privacy
+- Export / import / delete all data from Settings → Advanced
 
 ## Install in Chrome / Brave / Edge
 
@@ -143,21 +164,20 @@ Click the CTRL+WEB icon for quick actions on the current site.
 
 ```
 src/
-├── background/       # Service worker, context menus, message routing
-├── content/          # Content script, overlays, command palette
-├── popup/            # Toolbar popup (React)
-├── options/          # Settings & privacy page (React)
-├── features/         # Independent feature modules
-│   ├── copyClean/
-│   ├── cleanPage/
-│   ├── privacy/
-│   ├── cleanLink/
-│   ├── screenshot/
-│   ├── explain/
-│   ├── summarize/
-│   ├── saveLocal/
-│   └── inspect/
-└── shared/           # Types, utils, storage, constants
+├── background/       # Service worker, tab tracking, context menus, routing
+├── core/
+│   ├── registry/     # Feature registry (suite + utilities)
+│   ├── storage/      # Unified StorageService (IndexedDB)
+│   ├── privacy/      # PrivacyService (exclusions, toggles)
+│   └── pageExtraction/
+├── content/          # Content script, command palette, suite panels
+├── features/
+│   ├── findit/ backtrack/ context/ tabzero/
+│   ├── copypaste/ urlclean/ webtrash/ deadline/
+│   └── explain/ privacy/ screenshot/ summarize/ saveLocal/ inspect/ …
+├── popup/            # Suite dashboard
+├── options/          # Settings, privacy, export/import
+└── shared/           # Types, utils, settings
 ```
 
 Each feature is a self-contained module that can be invoked from the context menu, command palette, or popup via a unified messaging layer.
@@ -187,7 +207,9 @@ Works in Chromium-based browsers:
 | `storage` | Save settings locally |
 | `clipboardWrite` | Copy cleaned text and URLs |
 | `scripting` | Inject features when needed |
-| `host_permissions` | Run on web pages you visit |
+| `tabs` | TabZero grouping, workspace save/resume, screenshots |
+| `alarms` | Local deadline reminders (no server) |
+| `notifications` | Optional deadline reminder notifications |
 
 ## Settings
 
