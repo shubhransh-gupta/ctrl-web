@@ -1,4 +1,9 @@
-import { FEATURES, CONTEXT_MENU_FEATURES, EXTENSION_NAME } from '@/shared/constants';
+import {
+  EXTENSION_NAME,
+  CONTEXT_MENU_PRIMARY,
+  CONTEXT_MENU_FEATURES,
+  FEATURES,
+} from '@/shared/constants';
 import type { FeatureId } from '@/shared/types';
 import { executeFeatureOnTab, openPaletteOnTab } from './tabExecutor';
 
@@ -12,13 +17,30 @@ export function setupContextMenus(): void {
       contexts: ['all'],
     });
 
-    const allFeatures = Object.values(FEATURES);
-    for (const feature of allFeatures) {
+    for (const item of CONTEXT_MENU_PRIMARY) {
       chrome.contextMenus.create({
-        id: `${MENU_PREFIX}${feature.id}`,
+        id: `${MENU_PREFIX}${item.id}`,
+        parentId: `${MENU_PREFIX}root`,
+        title: item.label,
+        contexts: item.contexts,
+      });
+    }
+
+    chrome.contextMenus.create({
+      id: `${MENU_PREFIX}divider`,
+      parentId: `${MENU_PREFIX}root`,
+      type: 'separator',
+      contexts: ['all'],
+    });
+
+    const utilityIds: FeatureId[] = ['explain', 'privacy', 'screenshot', 'summarize', 'saveLocal', 'inspect'];
+    for (const id of utilityIds) {
+      const feature = FEATURES[id];
+      chrome.contextMenus.create({
+        id: `${MENU_PREFIX}${id}`,
         parentId: `${MENU_PREFIX}root`,
         title: `${feature.icon} ${feature.label}`,
-        contexts: getContextsForFeature(feature.id),
+        contexts: getContextsForFeature(id),
       });
     }
   });
@@ -50,6 +72,10 @@ export function handleContextMenuClick(
   const options: Record<string, unknown> = {};
   if (info.linkUrl) options.url = info.linkUrl;
   if (info.selectionText) options.selection = info.selectionText;
+
+  if (featureId === 'copypaste' && info.selectionText) {
+    options.action = 'save';
+  }
 
   executeFeatureOnTab(tab.id, featureId, options).then((result) => {
     if (!result.success && result.error) {
