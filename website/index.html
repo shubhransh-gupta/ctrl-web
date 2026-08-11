@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CTRL+WEB — Your browser, but smarter</title>
-  <meta name="description" content="CTRL+WEB is a free, local-first Chrome extension. Clean pages, copy text, check privacy, screenshot, and more — right from the right-click menu.">
+  <meta name="description" content="CTRL+WEB v2.0 — local-first browser superpowers. Find pages you've seen, backtrack your browsing, clean links, tame tab chaos, and more.">
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" type="image/png" href="icons/icon32.png">
   <link rel="stylesheet" href="styles.css">
@@ -41,14 +41,14 @@
         <span class="hero__badge-dots" aria-hidden="true">
           <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
         </span>
-        Free · Open source · Local-first
+        Free · Open source · Local-first · v2.0
       </div>
       <h1>CTRL+WEB</h1>
       <p class="hero__tagline">Your browser, but smarter.</p>
-      <p class="hero__desc">A browser extension that removes annoying, repetitive steps from everyday browsing. Right-click anything — CTRL+WEB handles the rest.</p>
-      <blockquote class="hero__quote">Stop opening five tabs to do one tiny thing.</blockquote>
+      <p class="hero__desc">Small browser superpowers that turn annoying 10-second tasks into one-click actions. Search what you've seen, backtrack your flow, clean links, tame tab chaos — all on your device.</p>
+      <blockquote class="hero__quote">What annoying thing do I need to do? CTRL+WEB has the answer.</blockquote>
       <div class="hero__cta">
-        <a href="https://github.com/shubhransh-gupta/ctrl-web/releases/latest" class="btn btn--primary">Download extension</a>
+        <a href="https://github.com/shubhransh-gupta/ctrl-web/releases/tag/v2.0.0" class="btn btn--primary">Download v2.0</a>
         <a href="#install" class="btn btn--secondary">Installation guide</a>
       </div>
       <p class="hero__note">Works in Chrome, Brave, Edge · No account · No npm required</p>
@@ -59,12 +59,12 @@
         <div class="about__grid">
           <div>
             <h2 class="section__title">What is CTRL+WEB?</h2>
-            <p class="section__lead">This website tells you about the product. The <strong>extension</strong> is what you install in your browser to use it.</p>
+            <p class="section__lead">CTRL+WEB is a collection of <strong>browser superpowers</strong> — not an AI chatbot. Each tool solves one annoying everyday task, locally, without an account.</p>
             <ul class="about__list">
               <li><strong>Website</strong> — you're here. Learn what it does and how to install.</li>
-              <li><strong>Extension</strong> — a small add-on in Chrome/Brave/Edge that adds right-click tools, a toolbar popup, and keyboard shortcuts.</li>
+              <li><strong>Extension</strong> — popup dashboard, right-click menu, and ⌘/Ctrl+Shift+K command palette.</li>
             </ul>
-            <p class="about__note">CTRL+WEB is not an AI chatbot in your browser. It's a utility layer: copy clean text, strip tracking from URLs, hide cookie banners, scan for secrets, take screenshots, and more — mostly processed on your device.</p>
+            <p class="about__note">v2.0 adds FindIT, Backtrack, Context, TabZero, CopyPaste, URLClean, WebTrash, and Deadline — plus the original utilities (Screenshot, Explain, Privacy, and more). Everything runs locally in IndexedDB and chrome.storage.</p>
           </div>
           <div class="about__card">
             <div class="about__card-label">Primary entry points</div>
@@ -80,16 +80,26 @@
 
     <section id="features" class="section features">
       <div class="section__inner">
-        <h2 class="section__title section__title--center">Everything you need, one right-click away</h2>
-        <p class="section__subtitle">Nine tools. No clutter. No account.</p>
+        <h2 class="section__title section__title--center">Browser superpowers</h2>
+        <p class="section__subtitle">Eight local-first tools. One command palette. No account.</p>
         <div class="features__grid">
-          <article class="feature"><span class="feature__icon">🧠</span><h3>Explain this</h3><p>Understand HTTP errors, dev terms, and technical jargon — locally, with optional AI.</p></article>
-          <article class="feature"><span class="feature__icon">🧹</span><h3>Clean this page</h3><p>Remove cookie banners, popups, and sticky clutter. Restore anytime.</p></article>
-          <article class="feature"><span class="feature__icon">📋</span><h3>Copy clean</h3><p>Copy selected text without ads, share buttons, or junk formatting.</p></article>
-          <article class="feature"><span class="feature__icon">🔐</span><h3>Check privacy</h3><p>Scan for emails, API keys, tokens — redact before you share.</p></article>
-          <article class="feature"><span class="feature__icon">📸</span><h3>Screenshot</h3><p>Visible, selection, or full-page capture with blur and annotations.</p></article>
-          <article class="feature"><span class="feature__icon">🔗</span><h3>Clean link</h3><p>Strip utm, fbclid, gclid, and other tracking from URLs.</p></article>
-          <article class="feature"><span class="feature__icon">📝</span><h3>Summarize</h3><p>Quick local summary of page content. Optional AI if you configure it.</p></article>
+          <article class="feature"><span class="feature__icon">🔎</span><h3>FindIT</h3><p>Find anything you've seen online — local search with snippets, filters, and pinning.</p></article>
+          <article class="feature"><span class="feature__icon">🧠</span><h3>Backtrack</h3><p>What was I doing? Reconstruct your recent browsing journey in minutes.</p></article>
+          <article class="feature"><span class="feature__icon">🧩</span><h3>Context</h3><p>Why did I open this tab? See related pages from your recent flow.</p></article>
+          <article class="feature"><span class="feature__icon">🗂️</span><h3>TabZero</h3><p>Turn tab chaos into workspaces — group, save, close, and resume.</p></article>
+          <article class="feature"><span class="feature__icon">📋</span><h3>CopyPaste</h3><p>Clipboard with source attribution. Know where you copied from.</p></article>
+          <article class="feature"><span class="feature__icon">🔗</span><h3>URLClean</h3><p>Strip utm, fbclid, gclid, and other tracking from any link.</p></article>
+          <article class="feature"><span class="feature__icon">🧹</span><h3>WebTrash</h3><p>Clean clutter from any page — cookie banners, popups, sticky bars. Fully reversible.</p></article>
+          <article class="feature"><span class="feature__icon">📅</span><h3>Deadline</h3><p>Detect application deadlines and expiry dates with local reminders.</p></article>
+        </div>
+
+        <h2 class="section__title section__title--center features__utilities-title">Plus utility tools</h2>
+        <p class="section__subtitle">Still included from v1 — explain, screenshot, privacy, and more.</p>
+        <div class="features__grid features__grid--utilities">
+          <article class="feature"><span class="feature__icon">🧠</span><h3>Explain</h3><p>Understand HTTP errors and dev terms locally, with optional AI.</p></article>
+          <article class="feature"><span class="feature__icon">🔐</span><h3>Privacy check</h3><p>Scan for emails, API keys, tokens — redact before you share.</p></article>
+          <article class="feature"><span class="feature__icon">📸</span><h3>Screenshot</h3><p>Visible, selection, or full-page capture with annotations.</p></article>
+          <article class="feature"><span class="feature__icon">📝</span><h3>Summarize</h3><p>Quick local page summary. Optional AI if you configure it.</p></article>
           <article class="feature"><span class="feature__icon">💾</span><h3>Save locally</h3><p>Bookmark snippets to a personal library on your device.</p></article>
           <article class="feature"><span class="feature__icon">🧪</span><h3>Inspect</h3><p>Copy CSS, selectors, and HTML from any element.</p></article>
         </div>
@@ -113,7 +123,7 @@
               <div>
                 <strong>Download the extension</strong>
                 <p>Get <code>ctrl-web-extension.zip</code> from the latest GitHub Release.</p>
-                <a href="https://github.com/shubhransh-gupta/ctrl-web/releases/latest" class="btn btn--small btn--primary">Download latest release</a>
+                <a href="https://github.com/shubhransh-gupta/ctrl-web/releases/tag/v2.0.0" class="btn btn--small btn--primary">Download v2.0.0</a>
               </div>
             </li>
             <li class="step">
@@ -214,7 +224,9 @@ npm run build</code></pre>
           <div class="privacy__item">No analytics or telemetry</div>
           <div class="privacy__item">AI disabled by default</div>
           <div class="privacy__item">No mandatory API keys</div>
-          <div class="privacy__item">Library stored on your device</div>
+          <div class="privacy__item">FindIT indexes locally (toggle off anytime)</div>
+          <div class="privacy__item">Clipboard storage off by default</div>
+          <div class="privacy__item">Export / delete all data in Settings</div>
         </div>
         <p class="privacy__footer">CTRL+WEB processes features locally whenever possible. Optional AI sends content only to <em>your</em> configured provider, with your explicit consent.</p>
       </div>
@@ -225,7 +237,7 @@ npm run build</code></pre>
         <h2>Ready to browse smarter?</h2>
         <p>Download the extension and try it on any webpage.</p>
         <div class="hero__cta">
-          <a href="https://github.com/shubhransh-gupta/ctrl-web/releases/latest" class="btn btn--primary">Download extension</a>
+          <a href="https://github.com/shubhransh-gupta/ctrl-web/releases/tag/v2.0.0" class="btn btn--primary">Download v2.0</a>
           <a href="https://github.com/shubhransh-gupta/ctrl-web" class="btn btn--secondary" target="_blank" rel="noopener">View on GitHub</a>
         </div>
       </div>
@@ -236,7 +248,7 @@ npm run build</code></pre>
     <div class="site-footer__inner">
       <div>
         <strong>CTRL+WEB</strong>
-        <p>Open source browser utility layer</p>
+        <p>Open source browser superpower suite</p>
       </div>
       <div class="site-footer__links">
         <a href="#install">Install</a>
