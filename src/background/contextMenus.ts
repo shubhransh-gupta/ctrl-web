@@ -33,7 +33,15 @@ export function setupContextMenus(): void {
       contexts: ['all'],
     });
 
-    const utilityIds: FeatureId[] = ['explain', 'privacy', 'screenshot', 'summarize', 'saveLocal', 'inspect'];
+    const utilityIds: FeatureId[] = [
+      'copyClean',
+      'explain',
+      'privacy',
+      'screenshot',
+      'summarize',
+      'saveLocal',
+      'inspect',
+    ];
     for (const id of utilityIds) {
       const feature = FEATURES[id];
       chrome.contextMenus.create({

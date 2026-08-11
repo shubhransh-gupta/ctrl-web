@@ -9,9 +9,16 @@ body {
 .popup {
   width: 320px;
   max-width: 320px;
+  max-height: 580px;
   background: var(--cw-bg);
   display: flex;
   flex-direction: column;
+}
+
+.popup__scroll {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
 }
 
 .popup--loading {

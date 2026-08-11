@@ -1,6 +1,7 @@
 import type { ScreenshotFormat } from '@/shared/types';
+import { hideExtensionUi, waitForRepaint } from './hideExtensionUi';
 
-export async function captureVisibleTab(format: ScreenshotFormat = 'png', quality = 92): Promise<Blob> {
+async function captureVisibleTabRaw(format: ScreenshotFormat = 'png', quality = 92): Promise<Blob> {
   return new Promise((resolve, reject) => {
     chrome.runtime.sendMessage(
       { type: 'CAPTURE_VISIBLE_TAB', payload: { format, quality } },
@@ -22,6 +23,17 @@ export async function captureVisibleTab(format: ScreenshotFormat = 'png', qualit
   });
 }
 
+/** Capture visible tab, hiding all CTRL+WEB overlays first so they are not in the shot. */
+export async function captureVisibleTab(format: ScreenshotFormat = 'png', quality = 92): Promise<Blob> {
+  const restore = hideExtensionUi();
+  await waitForRepaint();
+  try {
+    return await captureVisibleTabRaw(format, quality);
+  } finally {
+    restore();
+  }
+}
+
 function loadImage(blob: Blob): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -39,22 +51,6 @@ function wait(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-function hideCtrlWebUi(): () => void {
-  const els = document.querySelectorAll('[data-ctrlweb-ui]');
-  const states: { el: Element; display: string }[] = [];
-  els.forEach((el) => {
-    if (el instanceof HTMLElement) {
-      states.push({ el, display: el.style.display });
-      el.style.display = 'none';
-    }
-  });
-  return () => {
-    states.forEach(({ el, display }) => {
-      if (el instanceof HTMLElement) el.style.display = display;
-    });
-  };
-}
-
 export interface FullPageCaptureProgress {
   current: number;
   total: number;
@@ -63,7 +59,8 @@ export interface FullPageCaptureProgress {
 export async function captureFullPage(
   onProgress?: (p: FullPageCaptureProgress) => void
 ): Promise<Blob> {
-  const restoreUi = hideCtrlWebUi();
+  const restoreUi = hideExtensionUi();
+  await waitForRepaint();
   const originalScrollX = window.scrollX;
   const originalScrollY = window.scrollY;
 
@@ -101,7 +98,7 @@ export async function captureFullPage(
       window.scrollTo(0, scrollPositions[i]);
       await wait(150);
 
-      const blob = await captureVisibleTab('png');
+      const blob = await captureVisibleTabRaw('png');
       const img = await loadImage(blob);
       captures.push({ scrollY: scrollPositions[i], img });
     }

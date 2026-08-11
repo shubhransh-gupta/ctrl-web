@@ -77,6 +77,15 @@ export const SUITE_FEATURES: CTRLWebFeature[] = [
 
 export const UTILITY_FEATURES: CTRLWebFeature[] = [
   {
+    id: 'copyClean',
+    name: 'Copy clean',
+    description: 'Copy selected text without clutter',
+    icon: '📋',
+    enabled: true,
+    keywords: ['copy', 'clean', 'text', 'format'],
+    category: 'utility',
+  },
+  {
     id: 'explain',
     name: 'Explain this',
     description: 'Understand technical terms locally',

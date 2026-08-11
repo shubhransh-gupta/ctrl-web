@@ -1,5 +1,5 @@
 import { PALETTE_FEATURE_IDS } from '@/shared/constants';
-import { REGISTRY_BY_ID, SUITE_FEATURES } from '@/core/registry/featureRegistry';
+import { REGISTRY_BY_ID, SUITE_FEATURES, UTILITY_FEATURES } from '@/core/registry/featureRegistry';
 import type { FeatureId } from '@/shared/types';
 import { fuzzyMatch } from '@/shared/utils';
 
@@ -41,7 +41,7 @@ export function showCommandPalette(onSelect: (id: FeatureId) => void): void {
           />
           <p style="margin:8px 0 0;font-size:12px;color:#8b8b96">Search your browsing memory · ↑↓ Enter Esc</p>
         </div>
-        <div style="padding:6px 8px 4px;font-size:11px;color:#5a5a64;text-transform:uppercase;letter-spacing:0.06em">Features</div>
+        <div style="padding:6px 8px 4px;font-size:11px;color:#5a5a64;text-transform:uppercase;letter-spacing:0.06em">All features · suite + utilities</div>
         <ul id="ctrlweb-palette-list" role="listbox" style="
           list-style: none; margin: 0; padding: 4px 4px 8px;
           max-height: 380px; overflow-y: auto;
@@ -154,4 +154,4 @@ export function isPaletteOpen(): boolean {
   return paletteEl !== null;
 }
 
-export { SUITE_FEATURES };
+export { SUITE_FEATURES, UTILITY_FEATURES };

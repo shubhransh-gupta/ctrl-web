@@ -39,6 +39,7 @@ export const ALL_FEATURE_IDS = Object.keys(FEATURES) as FeatureId[];
 
 export const PALETTE_FEATURE_IDS: FeatureId[] = [
   ...SUITE_FEATURE_IDS,
+  'copyClean',
   'explain',
   'privacy',
   'screenshot',
